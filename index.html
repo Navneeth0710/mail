@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en-US" ng-app="myApp">
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  </head>
+  <body>
+    <form ng-controller="name">
+      <input type="text" ng-model="email" placeholder="Enter email" />
+      
+      <input type="submit" />
+
+      <h1>{{email}}</h1>
+      <p>{{error}}</p>
+    </form>
+
+    <script>
+      const app = angular.module("myApp", []);
+
+      app.controller("name", function ($scope) {
+        $scope.email = "";
+        $scope.error = "";
+
+        const EmailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+        $scope.$watch("email", function (newVal) {
+          if (!newVal) {
+            $scope.error = "";
+          } else if (!EmailRegex.test(newVal)) {
+            $scope.error = "invalid";
+          } else {
+            $scope.error = "valid";
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
